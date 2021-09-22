@@ -1,52 +1,25 @@
-const ADD_TICKET = "ADD_TICKET";
+const ADD_SEARCH_ID = "ADD_SEARCH_ID";
 
 let initialState = {
-    ticket: [
-        {id: 1, message: "Hey, hove old do?"},
-        {id: 2, message: "Hey,like "},
-        {id: 3, message: "Bilabial "},
-        {id: 4, message: "Bilabial "},
-    ]
-    // dialogsData: [
-    //     {id: 1, name: "Nasty"},
-    //     {id: 2, name: "Denis"},
-    //     {id: 3, name: "Nikita"},
-    //     {id: 4, name: "Nazar"},
-    //     {id: 5, name: "Misha"},
-    //     {id: 6, name: "Andrey"}
-    // ],
-    // messagesData: [
-    //     {id: 1, message: "Hi"},
-    //     {id: 2, message: "How is your likes?"},
-    //     {id: 3, message: "Hi, how are you"},
-    //     {id: 4, message: "Like your brother"},
-    //     {id: 5, message: "Yo"},
-    //     {id: 6, message: "Yo"}
-    // ]
-
+    searchId: ['']
 }
 
 const ticketsReducer = (state = initialState, action) => {
-
-
     switch (action.type) {
-
-        case ADD_TICKET:
-            let newPost = {
-                id: 5,
-                message: action.newPostText,
-                numberLike: 5
-            };
+        case ADD_SEARCH_ID:
             return {
                 ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ''
+                searchId: action.searchId
             };
         default:
             return state;
     }
 }
 
+export const setSearch = (searchId) => ({type: ADD_SEARCH_ID, searchId})
 
+export const search = (searchId) => (dispatch) => {
+   dispatch(setSearch(searchId.searchId))
+}
 
 export default ticketsReducer;

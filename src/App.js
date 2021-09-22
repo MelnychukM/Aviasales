@@ -3,7 +3,8 @@ import React from "react";
 import Logotype from "./components/Header/Logotype/Logo.png"
 import Filter from "./components/Filter/Filter";
 import Tabs from "./components/Tabs/Tabs";
-import Tickets from "./components/Tickets/Tickets";
+import {Tickets} from "./components/Tickets/Tickets";
+
 
 const App = () => {
     return <div className={style.container}>

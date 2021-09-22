@@ -1,9 +1,10 @@
 import React from "react";
 import style from "./Ticket.module.css";
 
-const Ticket = () => {
-    return <div className={style.wrapper}>
 
+const Ticket = (props) => {
+    return <div className={style.wrapper}>
+        {props.search}
     </div>
 }
 
