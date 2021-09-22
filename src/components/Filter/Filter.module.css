@@ -1,0 +1,18 @@
+.wrapper {
+    width: 232px;
+    height: 252px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.wrapper div {
+    margin-left: 20px;
+    font-size: 14px;
+    margin-top: 15px;
+
+}
+
+.wrapper div:nth-child(1) {
+    font-size: 13px;
+}
+

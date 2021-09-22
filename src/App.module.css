@@ -1,0 +1,37 @@
+
+.container {
+    display: grid;
+    width: 960px;
+    background-color: #F3F7FA;
+    margin: 0 auto;
+
+}
+
+.logo {
+    position: relative;
+    height:160px;
+    margin: 0 auto;
+
+}
+
+.logo img{
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.gridContainer {
+    display:flex;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.gridMain {
+    display: grid;
+    grid-template-rows: 50px auto;
+    gap: 20px;
+    padding-bottom: 80px;
+}
+
+
+
