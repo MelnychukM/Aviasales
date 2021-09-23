@@ -3,7 +3,8 @@ import store from "../../redux/redux-store";
 import {useDispatch, useSelector} from "react-redux";
 import {tinkerAPI} from "../../api/api";
 import {logDOM} from "@testing-library/react";
-import {search, setSearch} from "../../redux/tickets-reducer";
+import {search, setSearch, ticketAction} from "../../redux/tickets-reducer";
+import Ticket from "./Ticket/Ticket";
 
 
 export const Tickets = () => {
@@ -15,20 +16,29 @@ export const Tickets = () => {
             .then(response => dispatch(search(response)))
     }
 
+
     useEffect(() => {
         fetchSearchId()
     }, [])
 
 
 
-    const {searchId} = useSelector(({ticketsData}) => {
+    const {searchId,tickets} = useSelector(({ticketsData}) => {
         return {
-            searchId: ticketsData.searchId
+            searchId: ticketsData.searchId,
+            tickets: ticketsData.tickets
         }
     })
 
+    const fetchTicket = async () => {
+        await tinkerAPI.getTicket(searchId)
+            .then(response => dispatch(ticketAction(response.data)))
+
+    }
+
     useEffect(() => {
-        console.log('searchId: ', searchId)
+        fetchTicket(searchId)
+        console.log(tickets)
     }, [searchId])
 
     return (
@@ -36,9 +46,11 @@ export const Tickets = () => {
             {searchId &&
             <div>{searchId}</div>
             }
+            {tickets.map(item => <Ticket item={item}/>)}
         </div>
     )
 }
+
 
 
 
