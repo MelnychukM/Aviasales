@@ -1,45 +1,32 @@
-import React, {useEffect} from "react";
-import store from "../../redux/redux-store";
-import {useDispatch, useSelector} from "react-redux";
-import {tinkerAPI} from "../../api/api";
-import {logDOM} from "@testing-library/react";
-import {search, setSearch} from "../../redux/tickets-reducer";
+import React from "react";
+import {connect} from "react-redux";
+import {search} from "../../redux/tickets-reducer";
+import {compose} from "redux";
 
+class TicketsTest extends React.Component {
 
-export const Tickets = () => {
-
-    const dispatch = useDispatch()
-
-    const fetchSearchId = async () => {
-        await tinkerAPI.getSearchId()
-            .then(response => dispatch(search(response)))
+    componentDidMount() {
+        this.props.search();
     }
 
-    useEffect(() => {
-        fetchSearchId()
-    }, [])
-
-
-
-    const {searchId} = useSelector(({ticketsData}) => {
-        return {
-            searchId: ticketsData.searchId
-        }
-    })
-
-    useEffect(() => {
-        console.log('searchId: ', searchId)
-    }, [searchId])
-
-    return (
-        <div>
-            {searchId &&
-            <div>{searchId}</div>
-            }
-        </div>
-    )
+    render() {
+        return (
+            <div>
+                {this.props.searchId.searchId}
+            </div>
+        )
+    }
 }
 
+let mapStateToProps = (state) => {
+    return {
+        searchId:state.ticketsData.searchId
+    }
+}
 
+export default compose(
+    connect(mapStateToProps,{search}
+    )
+)(TicketsTest)
 
 

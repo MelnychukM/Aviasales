@@ -4,6 +4,7 @@ import Logotype from "./components/Header/Logotype/Logo.png"
 import Filter from "./components/Filter/Filter";
 import Tabs from "./components/Tabs/Tabs";
 import {Tickets} from "./components/Tickets/Tickets";
+import TicketsTest from "./components/Tickets/TicketsTest";
 
 
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
             <Filter/>
             <div className={style.gridMain}>
                 <Tabs/>
-                <Tickets/>
+                <TicketsTest/>
             </div>
         </div>
 

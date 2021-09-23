@@ -1,3 +1,5 @@
+import {tinkerAPI} from "../api/api";
+
 const ADD_SEARCH_ID = "ADD_SEARCH_ID";
 
 let initialState = {
@@ -18,8 +20,15 @@ const ticketsReducer = (state = initialState, action) => {
 
 export const setSearch = (searchId) => ({type: ADD_SEARCH_ID, searchId})
 
-export const search = (searchId) => (dispatch) => {
-   dispatch(setSearch(searchId.searchId))
+//
+// export const search = (searchId) => (dispatch) => {
+//    dispatch(setSearch(searchId.searchId))
+// }
+
+export const search = (searchId) => async (dispatch) => {
+    let data = await tinkerAPI.getSearchId(searchId)
+        .then(response => response)
+    dispatch(setSearch(data))
 }
 
 export default ticketsReducer;
