@@ -4,8 +4,8 @@ const ADD_SEARCH_ID = "ADD_SEARCH_ID";
 const ADD_TICKET = "ADD_TICKET";
 
 let initialState = {
-    searchId: [''],
-    tickets: []
+    searchId: "", //searchId: {searchId: yghyfyrj}
+    tickets: null
 }
 
 const ticketsReducer = (state = initialState, action) => {
@@ -18,7 +18,7 @@ const ticketsReducer = (state = initialState, action) => {
         case ADD_TICKET:
             return {
                 ...state,
-                tickets:action.tickets
+                tickets: action.tickets
             }
         default:
             return state;
@@ -28,12 +28,31 @@ const ticketsReducer = (state = initialState, action) => {
 export const setSearch = (searchId) => ({type: ADD_SEARCH_ID, searchId})
 export const setTicket = (tickets) => ({type: ADD_TICKET, tickets})
 
-export const search = (searchId) => (dispatch) => {
-   dispatch(setSearch(searchId.searchId))
+// export const search = (searchId) => (dispatch) => {
+//    dispatch(setSearch(searchId.searchId))
+// }
+
+// export const ticketAction = (ticket) => (dispatch) => {
+//    dispatch(setTicket(ticket.tickets))
+// }
+
+export const search = () => async (dispatch) => {
+    let data = await tinkerAPI.getSearchId()
+        .then(response => response.searchId
+        )
+    dispatch(setSearch(data))
+
 }
 
-export const ticketAction = (ticket) => (dispatch) => {
-   dispatch(setTicket(ticket.tickets))
+
+export const ticketAction = (tickets) => async (dispatch, getState) => {
+
+        let data = await tinkerAPI.getTicket(tickets)
+            .then(response => response.data.tickets)
+
+        dispatch(setTicket(data))
+
+
 }
 
 

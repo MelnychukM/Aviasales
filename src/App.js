@@ -14,7 +14,7 @@ const App = () => {
             <Filter/>
             <div className={style.gridMain}>
                 <Tabs/>
-                <Tickets/>
+                <TicketsTest/>
             </div>
         </div>
 

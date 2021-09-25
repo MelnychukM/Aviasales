@@ -1,10 +1,12 @@
 import React, {useEffect} from "react";
-import store from "../../redux/redux-store";
 import {useDispatch, useSelector} from "react-redux";
+
 import {tinkerAPI} from "../../api/api";
-import {logDOM} from "@testing-library/react";
-import {search, setSearch, ticketAction} from "../../redux/tickets-reducer";
+import {search, ticketAction} from "../../redux/tickets-reducer";
 import Ticket from "./Ticket/Ticket";
+
+
+
 
 
 export const Tickets = () => {
@@ -38,7 +40,7 @@ export const Tickets = () => {
 
     useEffect(() => {
         fetchTicket(searchId)
-        console.log(tickets)
+
     }, [searchId])
 
     return (
@@ -46,7 +48,13 @@ export const Tickets = () => {
             {searchId &&
             <div>{searchId}</div>
             }
-            {tickets.map(item => <Ticket item={item}/>)}
+            {tickets.map((item, index) => (
+                <div>
+                    {
+                        index < 5 && <Ticket item={item}/>
+                    }
+                </div>
+               ))}
         </div>
     )
 }
