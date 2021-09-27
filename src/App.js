@@ -3,8 +3,8 @@ import React from "react";
 import Logotype from "./components/Header/Logotype/Logo.png"
 import Filter from "./components/Filter/Filter";
 import Tabs from "./components/Tabs/Tabs";
-import {Tickets} from "./components/Tickets/Tickets";
-import TicketsTest from "./components/Tickets/TicketsTest";
+import {TicketsFunctions} from "./components/Tickets/TicketsFunctions";
+import Tickets from "./components/Tickets/Tickets";
 
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
             <Filter/>
             <div className={style.gridMain}>
                 <Tabs/>
-                <TicketsTest/>
+                <Tickets/>
             </div>
         </div>
 

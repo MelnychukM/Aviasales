@@ -1,65 +1,58 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import {connect} from "react-redux";
+import {compose} from "redux";
 
-import {tinkerAPI} from "../../api/api";
-import {search, ticketAction} from "../../redux/tickets-reducer";
+import {getPrice, search, ticketAction} from "../../redux/tickets-reducer";
 import Ticket from "./Ticket/Ticket";
 
 
-
-
-
-export const Tickets = () => {
-
-    const dispatch = useDispatch()
-
-    const fetchSearchId = async () => {
-        await tinkerAPI.getSearchId()
-            .then(response => dispatch(search(response)))
+class Tickets extends React.Component {
+    componentDidMount() {
+        this.props.search();
     }
 
-
-    useEffect(() => {
-        fetchSearchId()
-    }, [])
-
-
-
-    const {searchId,tickets} = useSelector(({ticketsData}) => {
-        return {
-            searchId: ticketsData.searchId,
-            tickets: ticketsData.tickets
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.searchId === "") {
+            this.props.ticketAction(this.props.searchId)
         }
-    })
 
-    const fetchTicket = async () => {
-        await tinkerAPI.getTicket(searchId)
-            .then(response => dispatch(ticketAction(response.data)))
+        // if (prevProps.tickets !== "") {
+        //     this.props.getPrice()
+        // }
 
     }
 
-    useEffect(() => {
-        fetchTicket(searchId)
+    render() {
 
-    }, [searchId])
+        return (
+            <div>
+                <div>SearchId : {this.props.searchId}</div>
+                {this.props.tickets === "" ? "" :
+                    this.props.tickets.map((item, index) => (
+                        <div>
+                            {
 
-    return (
-        <div>
-            {searchId &&
-            <div>{searchId}</div>
-            }
-            {tickets.map((item, index) => (
-                <div>
-                    {
-                        index < 5 && <Ticket item={item}/>
-                    }
-                </div>
-               ))}
-        </div>
-    )
+                                index < 5 && <Ticket key={item}  item={item}/>
+                            }
+                        </div>
+
+                    )
+                    )}
+            </div>
+        )
+    }
 }
 
+let mapStateToProps = (state) => {
+    return {
+        searchId: state.ticketsData.searchId,
+        tickets: state.ticketsData.tickets,
+        price: state.ticketsData.price
+    }
+}
 
-
+export default compose(
+    connect(mapStateToProps, {search, ticketAction})
+)(Tickets)
 
 
