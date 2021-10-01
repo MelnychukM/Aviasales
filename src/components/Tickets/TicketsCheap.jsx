@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
 
-import {getTicket, search} from "../../redux/tickets-reducer";
+import {getTicketCheap, search} from "../../redux/tickets-reducer";
 import Ticket from "./Ticket/Ticket";
 
 
@@ -12,8 +12,8 @@ class Tickets extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.searchId === "") {
-            this.props.getTicket(this.props.searchId)
+        if (prevProps.tickets === "") {
+            this.props.getTicketCheap(this.props.searchId)
         }
     }
 
@@ -22,6 +22,7 @@ class Tickets extends React.Component {
         return (
             <div>
                 <div>SearchId : {this.props.searchId}</div>
+                <div>Привет</div>
                 {this.props.tickets === "" ? "" :
                     this.props.tickets.map((item, index) => (
                         <div>
@@ -39,12 +40,12 @@ class Tickets extends React.Component {
 let mapStateToProps = (state) => {
     return {
         searchId: state.ticketsData.searchId,
-        tickets: state.ticketsData.tickets,
+        tickets: state.ticketsData.ticketsCheap
     }
 }
 
 export default compose(
-    connect(mapStateToProps, {search, getTicket})
+    connect(mapStateToProps, {search, getTicketCheap})
 )(Tickets)
 
 

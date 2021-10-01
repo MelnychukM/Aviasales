@@ -3,14 +3,15 @@ import {tinkerAPI} from "../api/api";
 const ADD_SEARCH_ID = "ADD_SEARCH_ID";
 const ADD_TICKET = "ADD_TICKET";
 const ADD_TICKET_PRICE = "ADD_TICKET_PRICE";
+const ADD_TICKET_FAST = "ADD_TICKET_FAST";
+
 
 let initialState = {
-    searchId: "", //searchId: {searchId: "....."}
+    searchId: "", //searchId: "....."
     tickets: "", //tickets: [{...},{...},...]
-    price: "", //price: [...,...,...]
-    carrier: "",
-    segmentsFirst: [],
-    segmentsSecond: [],
+    ticketsCheap: "", //ticketsCheap: [{...},{...},...]
+    ticketsFast: ""
+
 }
 
 const ticketsReducer = (state = initialState, action) => {
@@ -23,20 +24,22 @@ const ticketsReducer = (state = initialState, action) => {
         case ADD_TICKET:
             return {
                 ...state,
-                tickets: action.tickets,
-                price: action.tickets.map(item => item.price),
-                carrier: action.tickets.map(item => item.carrier),
-                segmentsFirst: action.tickets.map(item => item.segments[0]),
-                segmentsSecond: action.tickets.map(item => item.segments[1]),
-                durationFirst: action.tickets.map(item => item.segments[0]).map(item => item.duration),
-                durationSecond: action.tickets.map(item => item.segments[1]).map(item => item.duration)
-
+                tickets: action.tickets
             }
-            // case ADD_TICKET_PRICE:
-            // return {
-            //     ...state,
-            //     price: action.price
-            // }
+            case ADD_TICKET_PRICE:
+            return {
+                ...state,
+                ticketsCheap: action.ticketsCheap.sort(function(a, b) {
+                    return parseFloat(a.price) - parseFloat(b.price);
+                })
+            }
+            case ADD_TICKET_FAST:
+            return {
+                ...state,
+                ticketsFast: action.ticketsFast.sort(function(a, b) {
+                    return parseFloat(a.segments[0].duration) - parseFloat(b.segments[0].duration);
+                })
+            }
         default:
             return state;
     }
@@ -44,7 +47,8 @@ const ticketsReducer = (state = initialState, action) => {
 
 export const setSearch = (searchId) => ({type: ADD_SEARCH_ID, searchId})
 export const setTicket = (tickets) => ({type: ADD_TICKET, tickets})
-// export const setTicketPrice = (price) => ({type: ADD_TICKET_PRICE, price})
+export const setTicketPrice = (ticketsCheap) => ({type: ADD_TICKET_PRICE, ticketsCheap})
+export const setTicketFast = (ticketsFast) => ({type: ADD_TICKET_FAST, ticketsFast})
 
 
 export const search = () => async (dispatch) => {
@@ -53,15 +57,23 @@ export const search = () => async (dispatch) => {
     dispatch(setSearch(data))
 }
 
-export const ticketAction = (tickets) => async (dispatch, getState) => {
+export const getTicket = (tickets) => async (dispatch, getState) => {
         let data = await tinkerAPI.getTicket(tickets)
             .then(response => response.data.tickets)
         dispatch(setTicket(data))
 }
 
-// export const getPrice = () => (dispatch,getState) => {
-//     let state = getState().tickets.map((item, key=item.id) =>  item.price)
-//     dispatch(setTicketPrice(state))
-// }
+export const getTicketCheap = (ticketsCheap) => async (dispatch, getState) => {
+        let data = await tinkerAPI.getTicket(ticketsCheap)
+            .then(response => response.data.tickets)
+        dispatch(setTicketPrice(data))
+}
+
+export const getTicketFast = (ticketsFast) => async (dispatch, getState) => {
+        let data = await tinkerAPI.getTicket(ticketsFast)
+            .then(response => response.data.tickets)
+        dispatch(setTicketFast(data))
+}
+
 
 export default ticketsReducer;

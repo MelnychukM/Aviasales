@@ -39,6 +39,8 @@ const Ticket = (props) => {
         <div className={style.durationOne}>{durationSecondHourse}ч {durationSecondMinutes}м</div>
 
 
+
+
     </div>
 }
 

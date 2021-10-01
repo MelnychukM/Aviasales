@@ -2,20 +2,27 @@
     width: 502px;
     height: 50px;
     display: grid;
-    grid-template-columns: repeat(3,168px);
+    grid-template-columns: repeat(3,251px);
     margin: 0;
     padding: 0;
 }
 
 .button {
     border: 1px solid grey;
-    text-align: center;
-    width: 168px;
+
+    width: 251px;
     margin: 0;
     padding: 0;
-
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
 
 .active {
     background-color: #2196F3;
+    width: 251px;
+    height: 50px;
+
+
 }
