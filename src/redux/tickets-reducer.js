@@ -6,14 +6,12 @@ const ADD_TICKET_PRICE = "ADD_TICKET_PRICE";
 const ADD_TICKET_FAST = "ADD_TICKET_FAST";
 const ADD_INDEX_NUMBER = "ADD_INDEX_NUMBER";
 
-
 let initialState = {
     searchId: "", //searchId: "....."
     tickets: "", //tickets: [{...},{...},...]
     ticketsCheap: "", //ticketsCheap: [{...},{...},...]
     ticketsFast: "",
     indexNumber: 5
-
 }
 
 const ticketsReducer = (state = initialState, action) => {
@@ -87,7 +85,6 @@ export const getIndexNumber = () => (dispatch, getState) => {
     const IndexNumberState = getState().ticketsData.indexNumber
         let data = IndexNumberState  + 5;
         dispatch(setIndexNumber(data))
-    debugger
 }
 
 
