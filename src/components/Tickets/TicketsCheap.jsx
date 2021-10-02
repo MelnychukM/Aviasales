@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
 
-import {getTicketCheap, search} from "../../redux/tickets-reducer";
+import {getIndexNumber, getTicketCheap, search} from "../../redux/tickets-reducer";
 import Ticket from "./Ticket/Ticket";
 
 
@@ -17,6 +17,10 @@ class Tickets extends React.Component {
         }
     }
 
+    onClickIndexButton = () => {
+        this.props.getIndexNumber()
+    }
+
     render() {
 
         return (
@@ -27,11 +31,14 @@ class Tickets extends React.Component {
                     this.props.tickets.map((item, index) => (
                         <div>
                             {
-                                index < 5 && <Ticket key={item}item={item}/>
+                                index < this.props.indexNumber && <Ticket key={item}item={item}/>
                             }
                         </div>
                     )
                     )}
+                <div>
+                    <button onClick={this.onClickIndexButton}>next</button>
+                </div>
             </div>
         )
     }
@@ -40,12 +47,13 @@ class Tickets extends React.Component {
 let mapStateToProps = (state) => {
     return {
         searchId: state.ticketsData.searchId,
-        tickets: state.ticketsData.ticketsCheap
+        tickets: state.ticketsData.ticketsCheap,
+        indexNumber: state.ticketsData.indexNumber,
     }
 }
 
 export default compose(
-    connect(mapStateToProps, {search, getTicketCheap})
+    connect(mapStateToProps, {search, getTicketCheap,getIndexNumber})
 )(Tickets)
 
 

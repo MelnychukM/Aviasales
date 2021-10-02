@@ -4,13 +4,15 @@ const ADD_SEARCH_ID = "ADD_SEARCH_ID";
 const ADD_TICKET = "ADD_TICKET";
 const ADD_TICKET_PRICE = "ADD_TICKET_PRICE";
 const ADD_TICKET_FAST = "ADD_TICKET_FAST";
+const ADD_INDEX_NUMBER = "ADD_INDEX_NUMBER";
 
 
 let initialState = {
     searchId: "", //searchId: "....."
     tickets: "", //tickets: [{...},{...},...]
     ticketsCheap: "", //ticketsCheap: [{...},{...},...]
-    ticketsFast: ""
+    ticketsFast: "",
+    indexNumber: 5
 
 }
 
@@ -40,6 +42,11 @@ const ticketsReducer = (state = initialState, action) => {
                     return parseFloat(a.segments[0].duration) - parseFloat(b.segments[0].duration);
                 })
             }
+            case ADD_INDEX_NUMBER:
+            return {
+                ...state,
+                indexNumber: action.indexNumber
+            }
         default:
             return state;
     }
@@ -49,6 +56,7 @@ export const setSearch = (searchId) => ({type: ADD_SEARCH_ID, searchId})
 export const setTicket = (tickets) => ({type: ADD_TICKET, tickets})
 export const setTicketPrice = (ticketsCheap) => ({type: ADD_TICKET_PRICE, ticketsCheap})
 export const setTicketFast = (ticketsFast) => ({type: ADD_TICKET_FAST, ticketsFast})
+export const setIndexNumber = (indexNumber) => ({type: ADD_INDEX_NUMBER, indexNumber})
 
 
 export const search = () => async (dispatch) => {
@@ -57,22 +65,29 @@ export const search = () => async (dispatch) => {
     dispatch(setSearch(data))
 }
 
-export const getTicket = (tickets) => async (dispatch, getState) => {
+export const getTicket = (tickets) => async (dispatch) => {
         let data = await tinkerAPI.getTicket(tickets)
             .then(response => response.data.tickets)
         dispatch(setTicket(data))
 }
 
-export const getTicketCheap = (ticketsCheap) => async (dispatch, getState) => {
+export const getTicketCheap = (ticketsCheap) => async (dispatch) => {
         let data = await tinkerAPI.getTicket(ticketsCheap)
             .then(response => response.data.tickets)
         dispatch(setTicketPrice(data))
 }
 
-export const getTicketFast = (ticketsFast) => async (dispatch, getState) => {
+export const getTicketFast = (ticketsFast) => async (dispatch) => {
         let data = await tinkerAPI.getTicket(ticketsFast)
-            .then(response => response.data.tickets)
+             .then(response => response.data.tickets)
         dispatch(setTicketFast(data))
+}
+
+export const getIndexNumber = () => (dispatch, getState) => {
+    const IndexNumberState = getState().ticketsData.indexNumber
+        let data = IndexNumberState  + 5;
+        dispatch(setIndexNumber(data))
+    debugger
 }
 
 
