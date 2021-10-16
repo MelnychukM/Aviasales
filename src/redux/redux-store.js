@@ -1,11 +1,15 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
+import {reducer as formReducer} from 'redux-form'
 
 import ticketsReducer from './tickets-reducer'
+import filterReducer from './filter-reducer'
 
 
 let reducers = combineReducers({
     ticketsData: ticketsReducer,
+    form: formReducer,
+    filterData: filterReducer
 
 })
 

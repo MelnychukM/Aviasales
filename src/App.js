@@ -1,13 +1,16 @@
-import style from './App.module.css';
 import React from "react";
-import Logotype from "./components/Header/Logotype/Logo.png"
-import Filter from "./components/Filter/Filter";
-import Tabs from "./components/Tabs/Tabs";
-
-import Tickets from "./components/Tickets/Tickets";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+
+import Logotype from "./components/Header/Logotype/Logo.png"
+import Tabs from "./components/Tabs/Tabs";
+import Tickets from "./components/Tickets/Tickets";
 import TicketsCheap from "./components/Tickets/TicketsCheap";
 import TicketsFast from "./components/Tickets/TicketsFast";
+import FilterContainer from "./components/Filter/FilterContainer";
+
+import style from './App.module.css';
+
+
 
 
 const App = () => {
@@ -16,7 +19,7 @@ const App = () => {
             <div className={style.container}>
                 <div className={style.logo}><img src={Logotype} alt="Logotype"/></div>
                 <div className={style.gridContainer}>
-                    <Filter/>
+                    <FilterContainer/>
                     <div className={style.gridMain}>
                         <Tabs/>
                         <Switch>
@@ -38,6 +41,7 @@ const App = () => {
         </BrowserRouter>
     )
 }
+
 
 export default App;
 

@@ -25,13 +25,12 @@ class Tickets extends React.Component {
 
         return (
             <div>
-                <div>SearchId : {this.props.searchId}</div>
-                <div>Привет</div>
+                {/*<div>SearchId : {this.props.searchId}</div>*/}
                 {this.props.tickets === "" ? "" :
                     this.props.tickets.map((item, index) => (
                         <div>
                             {
-                                index < this.props.indexNumber && <Ticket key={item}item={item}/>
+                                index <= this.props.indexNumber && <Ticket key={item}item={item}/>
                             }
                         </div>
                     )
